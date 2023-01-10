@@ -19,7 +19,7 @@ import subprocess
 #else:
 #    desktop = os.path.expanduser("~/Desktop")
 
-username = os.getlogin()
+username = 'migas' # os.getlogin()
 desktop = 'C:\\Users\\' + username + '\\Desktop' 
 
 def resize_images(set_images_df, MAX_FILE_SIZE):
