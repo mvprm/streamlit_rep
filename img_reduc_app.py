@@ -3,8 +3,24 @@ import pandas as pd
 from tempfile import NamedTemporaryFile
 import os
 from PIL import Image
+import sys
+import subprocess
 
-desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
+# desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') 
+
+# from win32com.shell import shell, shellcon
+# import pypiwin32 
+# desktop = shell.SHGetFolderPath (0, shellcon.CSIDL_DESKTOP, 0, 0)
+
+# if sys.platform == "win32":
+#    command = r'reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v "Desktop"'
+#    result = subprocess.run(command, stdout=subprocess.PIPE, text = True)
+#    desktop = result.stdout.splitlines()[2].split()[2]
+#else:
+#    desktop = os.path.expanduser("~/Desktop")
+
+username = os.getlogin()
+desktop = 'C:\\Users\\' + username + '\\Desktop' 
 
 def resize_images(set_images_df, MAX_FILE_SIZE):
     if set_images_df is not None:
