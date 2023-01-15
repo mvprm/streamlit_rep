@@ -26,13 +26,13 @@ def resize_images(set_images_df, MAX_FILE_SIZE):
     if set_images_df is not None:
         for image_s in set_images_df:    
             file = image_s.read()    
-            file_details = {'filename': image_s.name, 'filetype': image_s.type}
+            file_details = {'filename': image_s.name, 'filetype': image_s.type, 'imageSize': image_s.size}
             #with NamedTemporaryFile(dir='.', suffix='.png') as f:
             #    f.write(image_s.getbuffer())
             # Open image
             image = Image.open(image_s) # desktop + '\\' +  image_s.name)
             # Get the current file size
-            image_size = os.stat(desktop + '\\' +  image_s.name).st_size # os.path.getsize(image_s.name) 
+            image_size = file_details['imageSize'] # os.stat(desktop + '\\' +  image_s.name).st_size # os.path.getsize(image_s.name) 
             if image_size > MAX_FILE_SIZE:
                 # Calculate new image size
                 new_size = (MAX_FILE_SIZE / image_size) ** 0.5
