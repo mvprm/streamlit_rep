@@ -26,10 +26,11 @@ def resize_images(set_images_df, MAX_FILE_SIZE):
     if set_images_df is not None:
         for image_s in set_images_df:    
             file = image_s.read()    
+            file_details = {'filename': image_s.name, 'filetype': image_s.type}
             #with NamedTemporaryFile(dir='.', suffix='.png') as f:
             #    f.write(image_s.getbuffer())
             # Open image
-            image = Image.open(desktop + '\\' +  image_s.name)
+            image = Image.open(image_s) # desktop + '\\' +  image_s.name)
             # Get the current file size
             image_size = os.stat(desktop + '\\' +  image_s.name).st_size # os.path.getsize(image_s.name) 
             if image_size > MAX_FILE_SIZE:
@@ -39,15 +40,17 @@ def resize_images(set_images_df, MAX_FILE_SIZE):
                 # Resize image
                 image_n = image.resize((new_width, new_height))
                 # Save the refactored image to the specified folder
-                save_dir = 'C:/Users/migas/Desktop/Resized_ims/'
+                '''with open(os.path.join('Resized_Images', image_s.name), 'wb') as f:
+                    f.write(image_s.getbuffer())'''
+                save_dir = os.path.join('Resized_ims/')
                 os.makedirs(save_dir, exist_ok=True)
                 image_n.save(save_dir + image_s.name[:-4] + '_resized.jpg')
+                st.text("Resizing Completed!")      
             else:
                 print('Image is already below Max Size!')
                 st.text("Image is already reduced")
                 image_n = image
-            st.image(image_n)    
-        st.text("Resizing Completed!")          
+            st.image(image_n)                
     return 
 
 # Image.from()
