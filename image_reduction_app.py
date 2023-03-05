@@ -5,8 +5,9 @@ import os
 from PIL import Image
 import sys
 import subprocess
+import getpass
 
-username = os.getlogin()
+username = getpass.getuser() # os.getlogin()
 desktop = 'C:\\Users\\' + username + '\\Desktop\\' 
 print('Username: {}'.format(os.getlogin()))
 
