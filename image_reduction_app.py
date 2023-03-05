@@ -9,7 +9,7 @@ import getpass
 
 username = getpass.getuser() # os.getlogin()
 desktop = 'C:\\Users\\' + username + '\\Desktop\\' 
-print('Username: {}'.format(os.getlogin()))
+print('Username: {}'.format(username))
 
 def resize_images(set_images_df, height, width):
     if set_images_df is not None:
