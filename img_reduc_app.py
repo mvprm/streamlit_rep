@@ -44,13 +44,15 @@ def resize_images(set_images_df, MAX_FILE_SIZE):
                     f.write(image_s.getbuffer())'''
                 save_dir = os.path.join('Resized_ims/')
                 os.makedirs(save_dir, exist_ok=True)
+                print(save_dir)
                 image_n.save(save_dir + image_s.name[:-4] + '_resized.jpg')
                 st.text("Resizing Completed!")      
             else:
                 print('Image is already below Max Size!')
                 st.text("Image is already reduced")
                 image_n = image
-            st.image(image_n)                
+            st.image(image_n)    
+        st.session_state['images'] = image_n         
     return 
 
 # Image.from()
@@ -70,3 +72,14 @@ btn = st.button("Resize", disabled=False) # on_click=resize_images(set_images, M
 if btn:
     resize_images(set_images, MAX_FILE_SIZE)
 
+    output_option = st.radio("Output option:", ["Download results", "Send via email"], disabled=False)
+    if output_option == "Download results":        
+        transformed_images = st.session_state['images']
+    elif output_option == "Send via email":
+        # transformed_images = st.session_state['images']
+        recipient_email = st.text_input("Recipient email address:")
+        send = st.button("Send email", disabled=False)
+        st.session_state.send_email = False
+        if send or st.session_state.send_email:
+            st.text('HERE')
+            # send_email(transformed_images, recipient_email) 
