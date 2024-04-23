@@ -151,7 +151,7 @@ if btn or st.session_state.load_state:
                     st.markdown(download_image(transformed_image), unsafe_allow_html=True)
         elif output_option == "Send via email":
             # transformed_images = st.session_state['images']
-            recipient_email = st.text_input("Recipient email address:")
+            recipient_email = st.text_input("Recipient email address:", value="mmeneses@arsnorte.min-saude.pt")
             send = st.button("Send email", disabled=False)
             st.session_state.send_email = False
             if send or st.session_state.send_email:
