@@ -76,7 +76,7 @@ if btn:
     if output_option == "Download results":        
         transformed_images = st.session_state['images']
     elif output_option == "Send via email":
-        # transformed_images = st.session_state['images']
+        transformed_images = st.session_state['images']
         recipient_email = st.text_input("Recipient email address:")
         send = st.button("Send email", disabled=False)
         st.session_state.send_email = False

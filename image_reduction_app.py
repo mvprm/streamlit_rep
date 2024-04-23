@@ -17,7 +17,7 @@ username = getpass.getuser() # os.getlogin()
 desktop = 'C:\\Users\\' + username + '\\Desktop\\' 
 print('Username: {}'.format(username))
 
-def resize_images(set_images_df, height, width):
+def resize_images(set_images_df, max_size): # height, width):
     transformed_images = []
     if set_images_df is not None:
         for image_s in set_images_df:    
@@ -32,10 +32,12 @@ def resize_images(set_images_df, height, width):
             image_size = file_details['imageSize'] # os.stat(desktop + '\\' +  image_s.name).st_size # os.path.getsize(image_s.name) 
             image_width = image.width # file_details['imageWidth']
             image_height = image.height # file_details['imageHeight']
-            if image_width > width or image_height > height:
+            if image_width > max_size: # > width or image_height > height:
                 # Calculate new image size
-                new_width = width
-                new_height = height
+                new_size = (max_size / image_size) ** 0.5
+                new_width, new_height = int(new_size * image.size[0]), int(new_size * image.size[1])
+                # new_width = width
+                # new_height = height
                 # Resize image
                 image_n = image.resize((new_width, new_height))
                 # Save the refactored image to the specified folder
@@ -108,15 +110,16 @@ st.title("Image Reduction Program")
 
 # Insert image
 set_images  = st.file_uploader("Insert image", type=[".jpg", ".png"], accept_multiple_files=True)
-# Set the desired image height and width
-col3, buff, buff2 = st.columns([1,3,1])
-with col3:
-    img_height = st.number_input("Image Height: ", value=100, )
-col4, buff, buff2 = st.columns([1,3,1])
-with col4:
-    img_width = st.number_input("Image Width: ", value=150)
+# # Set the desired image height and width
+# col3, buff, buff2 = st.columns([1,3,1])
+# with col3:
+#     img_height = st.number_input("Image Height: ", value=100, )
+# col4, buff, buff2 = st.columns([1,3,1])
+# with col4:
+#     img_width = st.number_input("Image Width: ", value=150)
 
-
+slider = st.slider("Maximum image size (MB)", min_value=0.0, max_value=5.0, value=1.0, step=0.5) # 1000000
+MAX_FILE_SIZE = slider * 1000000
 
 if "load_state" not in st.session_state:
      st.session_state.load_state = False
@@ -128,7 +131,7 @@ output = False
 btn = st.button("Resize", disabled=False) # on_click=resize_images(set_images, MAX_FILE_SIZE), 
 if btn or st.session_state.load_state:    
     st.session_state.load_state = True
-    transformed_images = resize_images(set_images, img_height, img_width)
+    transformed_images = resize_images(set_images, slider) # img_height, img_width)
     st.write(f"Number of transformed images: {len(transformed_images)}")
     # st.session_state['images'] = transformed_images
     # Download or send images        
@@ -152,7 +155,7 @@ if btn or st.session_state.load_state:
             send = st.button("Send email", disabled=False)
             st.session_state.send_email = False
             if send or st.session_state.send_email:
-                st.text('HERE')
+                # st.text('HERE')
                 send_email(transformed_images, recipient_email) 
 
         
