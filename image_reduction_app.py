@@ -131,7 +131,7 @@ output = False
 btn = st.button("Resize", disabled=False) # on_click=resize_images(set_images, MAX_FILE_SIZE), 
 if btn or st.session_state.load_state:    
     st.session_state.load_state = True
-    transformed_images = resize_images(set_images, slider) # img_height, img_width)
+    transformed_images = resize_images(set_images, MAX_FILE_SIZE) # img_height, img_width)
     st.write(f"Number of transformed images: {len(transformed_images)}")
     # st.session_state['images'] = transformed_images
     # Download or send images        
