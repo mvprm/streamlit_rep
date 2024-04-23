@@ -140,7 +140,7 @@ if btn or st.session_state.load_state:
     output = True
 
     if output:        
-        output_option = st.radio("Output option:", ["Download results", "Send via email"], disabled=False)
+        output_option = st.radio("Output option:", ["Download results","Send via email"], disabled=False, index=1)
         if output_option == "Download results":        
             # transformed_images = st.session_state['images']
             download =  st.button("Download results", disabled=False)
